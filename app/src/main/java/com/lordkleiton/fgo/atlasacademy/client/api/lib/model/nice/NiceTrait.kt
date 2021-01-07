@@ -5,6 +5,6 @@ import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.util.findEnumByName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NiceTrait(val id: Int, val negative: Boolean, val name: String) {
+data class NiceTrait(val id: Int, val negative: Boolean = false, val name: String) {
     val traitName = findEnumByName<TraitEnum>(name)
 }

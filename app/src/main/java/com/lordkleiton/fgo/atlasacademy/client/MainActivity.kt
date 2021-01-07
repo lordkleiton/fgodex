@@ -21,9 +21,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val c = Json { ignoreUnknownKeys = true }.decodeFromString<BasicBuff>(
+        val c = Json { ignoreUnknownKeys = true
+
+
+        }.decodeFromString<BasicBuff>(
             """
-            {"id": 0,"name": "string","icon": "string","type": "none"}
+           {"id":1001,"name":"Silver Mistletoe","icon":"https://assets.atlasacademy.io/GameData/NA/BuffIcons/bufficon_306.png","type":"upTolerance","vals":[{"id":3004,"name":"buffPositiveEffect"}],"tvals":[{"id":3005,"name":"buffNegativeEffect"}],"ckSelfIndv":[],"ckOpIndv":[{"id":3005,"name":"buffNegativeEffect"}]}
         """
         )
 
