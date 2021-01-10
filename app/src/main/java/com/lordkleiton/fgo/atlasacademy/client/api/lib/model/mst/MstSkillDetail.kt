@@ -1,13 +1,12 @@
-package com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic
+package com.lordkleiton.fgo.atlasacademy.client.api.lib.model.mst
 
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.const.Const.FALLBACK_INT
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.const.Const.FALLBACK_STRING
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.other.OtherMCAssets
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BasicMysticCode(
+data class MstSkillDetail(
     val id: Int = FALLBACK_INT,
-    val name: String = FALLBACK_STRING,
-    val item: OtherMCAssets
+    val detail: String = FALLBACK_STRING,
+    val detailShort: String = FALLBACK_STRING
 )
