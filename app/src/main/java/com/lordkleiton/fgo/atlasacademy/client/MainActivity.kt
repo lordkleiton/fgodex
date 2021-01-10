@@ -3,9 +3,7 @@ package com.lordkleiton.fgo.atlasacademy.client
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicBuff
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.enum.NiceBuffTypeEnum
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.util.findEnumByName
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicMysticCode
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -21,13 +19,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val c = Json { ignoreUnknownKeys = true
-
-
-        }.decodeFromString<BasicBuff>(
+        val c = Json {
+            ignoreUnknownKeys = true
+        }.decodeFromString<BasicMysticCode>(
             """
-           {"id":1001,"name":"Silver Mistletoe","icon":"https://assets.atlasacademy.io/GameData/NA/BuffIcons/bufficon_306.png","type":"upTolerance","vals":[{"id":3004,"name":"buffPositiveEffect"}],"tvals":[{"id":3005,"name":"buffNegativeEffect"}],"ckSelfIndv":[],"ckOpIndv":[{"id":3005,"name":"buffNegativeEffect"}]}
-        """
+           {"id":1,"name":"Mystic Code: Chaldea","item":{"male":"https://assets.atlasacademy.io/GameData/NA/Items/masterequip00001.png","female":"https://assets.atlasacademy.io/GameData/NA/Items/masterequip00002.png"}}"""
         )
 
         Log.i("hmm", c.toString())

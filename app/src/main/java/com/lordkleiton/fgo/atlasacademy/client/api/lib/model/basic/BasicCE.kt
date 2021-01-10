@@ -1,12 +1,15 @@
 package com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic
 
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.const.Const.FALLBACK_INT
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.const.Const.FALLBACK_STRING
+
 data class BasicCE(
-    val id: Int,
-    val collectionNo: Int,
-    val name: String,
-    val type: String,
-    val rarity: Int,
-    val atkMax: Int,
-    val hpMax: Int,
-    val face: String
+    val id: Int = FALLBACK_INT,
+    val collectionNo: Int = FALLBACK_INT,
+    val name: String = FALLBACK_STRING,
+    val type: String = FALLBACK_STRING,
+    val rarity: Int = FALLBACK_INT,
+    val atkMax: Int = FALLBACK_INT,
+    val hpMax: Int = FALLBACK_INT,
+    val face: String = FALLBACK_STRING
 )
