@@ -3,7 +3,7 @@ package com.lordkleiton.fgo.atlasacademy.client
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicMysticCode
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.extra.ExtraAssetsUrl
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -21,9 +21,21 @@ class MainActivity : AppCompatActivity() {
 
         val c = Json {
             ignoreUnknownKeys = true
-        }.decodeFromString<BasicMysticCode>(
+        }.decodeFromString<ExtraAssetsUrl>(
             """
-           {"id":1,"name":"Mystic Code: Chaldea","item":{"male":"https://assets.atlasacademy.io/GameData/NA/Items/masterequip00001.png","female":"https://assets.atlasacademy.io/GameData/NA/Items/masterequip00002.png"}}"""
+          
+          {
+      "ascension": {
+        "1": "https://assets.atlasacademy.io/GameData/NA/CharaGraph/100100/100100a@1.png",
+        "2": "https://assets.atlasacademy.io/GameData/NA/CharaGraph/100100/100100a@2.png",
+        "3": "https://assets.atlasacademy.io/GameData/NA/CharaGraph/100100/100100b@1.png",
+        "4": "https://assets.atlasacademy.io/GameData/NA/CharaGraph/100100/100100b@2.png"
+      },
+      "costume": {
+        "100130": "https://assets.atlasacademy.io/GameData/NA/CharaGraph/100130/100130a.png"
+      }
+    }
+    """
         )
 
         Log.i("hmm", c.toString())
