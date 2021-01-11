@@ -4,7 +4,7 @@ import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.const.Const.FALLBAC
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MstSvtskill(
+data class MstSvtSkill(
     val strengthStatus: Int = FALLBACK_INT,
     val svtId: Int = FALLBACK_INT,
     val num: Int = FALLBACK_INT,
