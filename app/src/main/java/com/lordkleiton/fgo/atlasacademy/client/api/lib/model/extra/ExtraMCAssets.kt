@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ExtraMCAssets(
-    val item: OtherMCAssets,
-    val masterFace: OtherMCAssets,
-    val masterFigure: OtherMCAssets
+    val item: OtherMCAssets = OtherMCAssets(),
+    val masterFace: OtherMCAssets = OtherMCAssets(),
+    val masterFigure: OtherMCAssets = OtherMCAssets(),
 )
