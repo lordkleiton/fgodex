@@ -29,4 +29,13 @@ object ApiRequestHandler {
             ignoreUnknownKeys = true
         }.decodeFromJsonElement<T>(res.body()!!)
     }
+
+    suspend inline fun <reified T> find(service: InterfaceAtlasRequest = this.service): List<T?> {
+        val res = service.find("servant").awaitResponse()
+
+        return Json {
+            isLenient = true
+            ignoreUnknownKeys = true
+        }.decodeFromJsonElement<List<T>>(res.body()!!)
+    }
 }
