@@ -26,15 +26,15 @@ object ApiRequestHandler {
         ignoreUnknownKeys = true
     }
 
-    suspend inline fun <reified T> get(service: InterfaceAtlasRequest = this.service): T? {
+    suspend inline fun <reified T> get(service: InterfaceAtlasRequest = this.service): T {
         val res = service.get("servant", "1", type = "basic").awaitResponse()
 
-        return json.decodeFromJsonElement<T>(res.body()!!)
+        return json.decodeFromJsonElement(res.body()!!)
     }
 
-    suspend inline fun <reified T> find(service: InterfaceAtlasRequest = this.service): List<T?> {
+    suspend inline fun <reified T> find(service: InterfaceAtlasRequest = this.service): List<T> {
         val res = service.find("servant").awaitResponse()
 
-        return json.decodeFromJsonElement<List<T>>(res.body()!!)
+        return json.decodeFromJsonElement(res.body()!!)
     }
 }

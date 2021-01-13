@@ -1,6 +1,7 @@
 package com.lordkleiton.fgo.atlasacademy.client
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,12 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 Toast.makeText(baseContext, result.toString(), Toast.LENGTH_SHORT).show()
+
+                val r2 = withContext(Dispatchers.Default) {
+                    ApiRequestHandler.find<BasicServant>()
+                }
+
+                r2.forEach { Log.i("hmm", it.toString()) }
             }
         }
     }
