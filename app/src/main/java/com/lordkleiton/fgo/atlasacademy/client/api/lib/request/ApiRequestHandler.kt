@@ -14,28 +14,27 @@ import retrofit2.awaitResponse
 @ExperimentalSerializationApi
 object ApiRequestHandler {
     private val contentType = "application/json".toMediaType()
+    private val converter = Json.asConverterFactory(contentType)
     private val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
     val service: InterfaceAtlasRequest =
-        Retrofit.Builder().baseUrl("https://api.atlasacademy.io/").client(client)
-            .addConverterFactory(Json.asConverterFactory(contentType))
+        Retrofit.Builder().baseUrl("https://api.atlasacademy.io/")
+            .client(client).addConverterFactory(converter)
             .build().create(InterfaceAtlasRequest::class.java)
+    val json = Json {
+        isLenient = true
+        ignoreUnknownKeys = true
+    }
 
     suspend inline fun <reified T> get(service: InterfaceAtlasRequest = this.service): T? {
         val res = service.get("servant", "1", type = "basic").awaitResponse()
 
-        return Json {
-            isLenient = true
-            ignoreUnknownKeys = true
-        }.decodeFromJsonElement<T>(res.body()!!)
+        return json.decodeFromJsonElement<T>(res.body()!!)
     }
 
     suspend inline fun <reified T> find(service: InterfaceAtlasRequest = this.service): List<T?> {
         val res = service.find("servant").awaitResponse()
 
-        return Json {
-            isLenient = true
-            ignoreUnknownKeys = true
-        }.decodeFromJsonElement<List<T>>(res.body()!!)
+        return json.decodeFromJsonElement<List<T>>(res.body()!!)
     }
 }
