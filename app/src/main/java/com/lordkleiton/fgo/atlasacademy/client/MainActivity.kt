@@ -3,10 +3,8 @@ package com.lordkleiton.fgo.atlasacademy.client
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.ApiRequestHandler
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.RequestsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -22,15 +20,10 @@ class MainActivity : AppCompatActivity() {
 
         btn.setOnClickListener {
             GlobalScope.launch(Dispatchers.Main) {
-                val result = ApiRequestHandler.get<BasicServant>()
+                val r = RequestsRepository.nice.getServant()
 
-                if (result != null) {
-                    Toast.makeText(baseContext, result.toString(), Toast.LENGTH_SHORT).show()
-                }
-
-                val r2 = ApiRequestHandler.find<BasicServant>()
-
-                r2?.forEach { Log.i("hmm", it.toString()) }
+                if (r != null)
+                    Log.i("hmm", r.toString())
             }
         }
     }
