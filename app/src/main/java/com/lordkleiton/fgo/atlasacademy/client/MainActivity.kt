@@ -1,8 +1,8 @@
 package com.lordkleiton.fgo.atlasacademy.client
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.RequestsRepository
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
                 val r = RequestsRepository.nice.getServant()
 
                 if (r != null)
-                    Log.i("hmm", r.toString())
+                    Toast.makeText(baseContext, r.toString(), Toast.LENGTH_LONG).show()
             }
         }
     }
