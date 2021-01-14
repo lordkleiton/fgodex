@@ -10,8 +10,10 @@ import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.ApiRequestHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
 
 class MainActivity : AppCompatActivity() {
+    @ExperimentalSerializationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
