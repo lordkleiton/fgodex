@@ -1,4 +1,4 @@
-package com.lordkleiton.fgo.atlasacademy.client.api.lib.request
+package com.lordkleiton.fgo.atlasacademy.client.api.lib.request.handler
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -36,8 +36,8 @@ object ApiRequestHandler {
     }
 
     suspend inline fun <reified T> get(
-        options: GetModel = GetModel(),
-        service: InterfaceAtlasRequest = this.service
+        options: GetModel,
+        service: InterfaceAtlasRequest = this.service,
     ): T? {
         val call = service.get(
             options.type.name,
@@ -50,8 +50,8 @@ object ApiRequestHandler {
     }
 
     suspend inline fun <reified T> find(
-        options: FindModel = FindModel(),
-        service: InterfaceAtlasRequest = this.service
+        options: FindModel,
+        service: InterfaceAtlasRequest = this.service,
     ): List<T>? {
         val call = service.find(
             options.type.name,
