@@ -10,7 +10,6 @@ import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.ApiRequestHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,17 +20,15 @@ class MainActivity : AppCompatActivity() {
 
         btn.setOnClickListener {
             GlobalScope.launch(Dispatchers.Main) {
-                val result = withContext(Dispatchers.Default) {
-                    ApiRequestHandler.get<BasicServant>()
+                val result = ApiRequestHandler.get<BasicServant>()
+
+                if (result != null) {
+                    Toast.makeText(baseContext, result.toString(), Toast.LENGTH_SHORT).show()
                 }
 
-                Toast.makeText(baseContext, result.toString(), Toast.LENGTH_SHORT).show()
+                val r2 = ApiRequestHandler.find<BasicServant>()
 
-                val r2 = withContext(Dispatchers.Default) {
-                    ApiRequestHandler.find<BasicServant>()
-                }
-
-                r2.forEach { Log.i("hmm", it.toString()) }
+                r2?.forEach { Log.i("hmm", it.toString()) }
             }
         }
     }
