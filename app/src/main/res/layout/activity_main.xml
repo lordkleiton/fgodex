@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="NA"
+            android:text="@string/region_na"
             android:layout_marginEnd="20dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,7 +30,7 @@
             android:id="@+id/main_radio_jp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="JP"
+            android:text="@string/region_jp"
             app:layout_constraintStart_toEndOf="@id/main_radio_na"
             app:layout_constraintTop_toTopOf="@id/main_radio_na" />
 

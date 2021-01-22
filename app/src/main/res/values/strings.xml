@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">FGOdex</string>
+    <string name="app_name">hmmm</string>
+    <string name="id">id</string>
+    <string name="servant_portrait">Servant portrait</string>
+    <string name="region_na">NA</string>
+    <string name="region_jp">JP</string>
 </resources>

@@ -22,6 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/servant_portrait"
             tools:background="@android:color/holo_orange_dark" />
 
         <TextView
@@ -31,7 +32,7 @@
             android:layout_margin="1dp"
             android:background="@drawable/bg_dark_rounded_corner"
             android:paddingHorizontal="5dp"
-            android:text="id"
+            android:text="@string/id"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/list_item_servant_img"
             app:layout_constraintEnd_toEndOf="@id/list_item_servant_img" />
