@@ -14,7 +14,6 @@ import com.lordkleiton.fgo.atlasacademy.client.R
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
 import java.util.*
 
-
 class BasicServantListAdapter(
     private val context: Context,
     private val items: MutableList<BasicServant>,

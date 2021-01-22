@@ -3,6 +3,7 @@ package com.lordkleiton.fgo.atlasacademy.client.api.lib.request.nice
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.nice.*
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.base.BaseRequests
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumEndpoint
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumExportEndpoint
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumType
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -112,4 +113,43 @@ object NiceRequests : BaseRequests(EnumType.nice) {
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
     ): NiceQuest? = get(EnumEndpoint.quest, region, id)
+
+    /* findAll */
+
+    suspend fun findAllServant(
+        region: EnumRegion = baseFind.region,
+    ): List<NiceServant>? = findAll(EnumExportEndpoint.nice_servant, region)
+
+    suspend fun findAllServantLore(
+        region: EnumRegion = baseFind.region,
+    ): List<NiceServant>? = findAll(EnumExportEndpoint.nice_servant_lore, region)
+
+    suspend fun findAllServantEnglishName(
+    ): List<NiceServant>? = findAll(EnumExportEndpoint.nice_servant_lang_en, EnumRegion.JP)
+
+    suspend fun findAllServantEnglishNameLore(
+    ): List<NiceServant>? = findAll(EnumExportEndpoint.nice_servant_lore_lang_en, EnumRegion.JP)
+
+    suspend fun findAllCE(
+        region: EnumRegion = baseFind.region,
+    ): List<NiceEquip>? = findAll(EnumExportEndpoint.nice_equip, region)
+
+    suspend fun findAllCELore(
+        region: EnumRegion = baseFind.region,
+    ): List<NiceEquip>? = findAll(EnumExportEndpoint.nice_equip_lore, region)
+
+    suspend fun findAllCEEnglishName(
+    ): List<NiceEquip>? = findAll(EnumExportEndpoint.nice_equip_lang_en, EnumRegion.JP)
+
+    suspend fun findAllCEEnglishNameLore(
+    ): List<NiceEquip>? = findAll(EnumExportEndpoint.nice_equip_lore_lang_en, EnumRegion.JP)
+
+    suspend fun findAllCC(
+        region: EnumRegion = baseFind.region,
+    ): List<NiceCommandCode>? = findAll(EnumExportEndpoint.nice_command_code, region)
+
+    suspend fun findAllMC(
+        region: EnumRegion = baseFind.region,
+    ): List<NiceMysticCode>? = findAll(EnumExportEndpoint.nice_mystic_code, region)
+
 }

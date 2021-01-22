@@ -9,4 +9,5 @@ object Const {
     const val URL_ID = "id"
     const val FIND_URL = "{$URL_TYPE}/{$URL_REGION}/{$URL_ENDPOINT}/search"
     const val GET_URL = "{$URL_TYPE}/{$URL_REGION}/{$URL_ENDPOINT}/{$URL_ID}"
+    const val EXPORT_URL = "export/{$URL_REGION}/{$URL_ENDPOINT}.json"
 }

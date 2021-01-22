@@ -3,6 +3,7 @@ package com.lordkleiton.fgo.atlasacademy.client.api.lib.request.basic
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.*
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.base.BaseRequests
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumEndpoint
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumExportEndpoint
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumType
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -102,4 +103,36 @@ object BasicRequests : BaseRequests(EnumType.basic) {
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
     ): BasicWar? = get(EnumEndpoint.war, region, id)
+
+    /* findAll */
+
+    suspend fun findAllServant(
+        region: EnumRegion = baseFind.region,
+    ): List<BasicServant>? = findAll(EnumExportEndpoint.basic_servant, region)
+
+    suspend fun findAllServantEnglishName(
+    ): List<BasicServant>? = findAll(EnumExportEndpoint.basic_servant_lang_en, EnumRegion.JP)
+
+    suspend fun findAllCE(
+        region: EnumRegion = baseFind.region,
+    ): List<BasicEquip>? = findAll(EnumExportEndpoint.basic_equip, region)
+
+    suspend fun findAllCEEnglishName(
+    ): List<BasicEquip>? = findAll(EnumExportEndpoint.basic_equip_lang_en, EnumRegion.JP)
+
+    suspend fun findAllCC(
+        region: EnumRegion = baseFind.region,
+    ): List<BasicCommandCode>? = findAll(EnumExportEndpoint.basic_command_code, region)
+
+    suspend fun findAllMC(
+        region: EnumRegion = baseFind.region,
+    ): List<BasicMysticCode>? = findAll(EnumExportEndpoint.basic_mystic_code, region)
+
+    suspend fun findAllWar(
+        region: EnumRegion = baseFind.region,
+    ): List<BasicWar>? = findAll(EnumExportEndpoint.basic_war, region)
+
+    suspend fun findAllEvent(
+        region: EnumRegion = baseFind.region,
+    ): List<BasicEvent>? = findAll(EnumExportEndpoint.basic_event, region)
 }

@@ -14,10 +14,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 @ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: BasicServantListAdapter
-    private lateinit var fba: FloatingActionButton
     private lateinit var rv: RecyclerView
-    private var index = 1
-    private val paging = 50
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,15 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         setupAdapter()
 
-        if (index < paging) loadServant()
-
-        fba.setOnClickListener {
-            loadServant()
-        }
+        loadServants()
     }
 
     private fun setupComponents() {
-        fba = findViewById(R.id.btn)
         rv = findViewById(R.id.main_lv)
     }
 
@@ -45,20 +37,9 @@ class MainActivity : AppCompatActivity() {
         rv.adapter = adapter
     }
 
-    private fun loadServant() {
+    private fun loadServants() {
         GlobalScope.launch(Dispatchers.Main) {
-            for (i in 1..paging) {
-
-                val r = RequestsRepository.basic.getServant(id = index)
-
-                if (r != null) {
-                    adapter.add(r)
-                } else {
-                    fba.hide()
-                }
-
-                index++
-            }
+            RequestsRepository.basic.findAllServant()?.forEach { adapter.add(it) }
         }
     }
 }

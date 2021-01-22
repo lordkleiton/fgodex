@@ -1,5 +1,6 @@
 package com.lordkleiton.fgo.atlasacademy.client.api.lib.request.`interface`
 
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.const.Const.EXPORT_URL
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.const.Const.FIND_URL
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.const.Const.GET_URL
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.const.Const.URL_ENDPOINT
@@ -27,5 +28,11 @@ interface InterfaceAtlasRequest {
         @Path(URL_REGION) region: String,
         @Path(URL_ENDPOINT) endpoint: String,
         @QueryMap options: Map<String, String>,
+    ): Call<JsonElement>
+
+    @GET(EXPORT_URL)
+    fun findAll(
+        @Path(URL_REGION) region: String,
+        @Path(URL_ENDPOINT) endpoint: String,
     ): Call<JsonElement>
 }

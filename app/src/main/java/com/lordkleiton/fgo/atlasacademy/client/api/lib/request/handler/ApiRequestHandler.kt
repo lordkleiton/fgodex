@@ -2,6 +2,7 @@ package com.lordkleiton.fgo.atlasacademy.client.api.lib.request.handler
 
 import android.util.Log
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.`interface`.InterfaceAtlasRequest
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.model.FindAllDataModel
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.model.FindModel
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.model.GetModel
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.util.ApiUtils
@@ -38,6 +39,18 @@ object ApiRequestHandler {
             options.region.name,
             options.endpoint.name,
             options.options,
+        )
+
+        return handleCall<List<T>>(call)
+    }
+
+    suspend inline fun <reified T> findAll(
+        options: FindAllDataModel,
+        service: InterfaceAtlasRequest = ApiUtils.service,
+    ): List<T>? {
+        val call = service.findAll(
+            options.region.name,
+            options.endpoint.name,
         )
 
         return handleCall<List<T>>(call)
