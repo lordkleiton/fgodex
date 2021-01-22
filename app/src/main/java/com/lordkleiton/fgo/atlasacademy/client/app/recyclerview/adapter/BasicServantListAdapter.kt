@@ -12,11 +12,13 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.lordkleiton.fgo.atlasacademy.client.R
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
+import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.listener.OnListItemClickListener
 import java.util.*
 
 class BasicServantListAdapter(
     private val context: Context,
     private val items: MutableList<BasicServant>,
+    private val onItemClickListener: OnListItemClickListener,
 ) : RecyclerView.Adapter<BasicServantListAdapter.BasicServantViewHolder>() {
     override fun getItemCount(): Int = items.size
 
@@ -29,7 +31,13 @@ class BasicServantListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BasicServantViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.list_item_servant, parent, false)
 
-        return BasicServantViewHolder(view, context)
+        return BasicServantViewHolder(view, context, onItemClickListener)
+    }
+
+    val clear = {
+        items.clear()
+
+        notifyDataSetChanged()
     }
 
     val swap = { posInit: Int, posEnd: Int ->
@@ -56,7 +64,11 @@ class BasicServantListAdapter(
         notifyItemChanged(pos)
     }
 
-    class BasicServantViewHolder(view: View, private val context: Context) :
+    class BasicServantViewHolder(
+        view: View,
+        private val context: Context,
+        clickListener: OnListItemClickListener,
+    ) :
         RecyclerView.ViewHolder(view) {
         private lateinit var servant: BasicServant
         private val img: ImageView
@@ -67,9 +79,9 @@ class BasicServantListAdapter(
                 img = findViewById(R.id.list_item_servant_img)
                 svtId = findViewById(R.id.list_item_servant_id)
 
-//                setOnClickListener {
-//                    click.onItemClick(note, adapterPosition)
-//                }
+                setOnClickListener {
+                    clickListener.onItemClick(servant, adapterPosition)
+                }
             }
         }
 
