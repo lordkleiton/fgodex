@@ -3,10 +3,11 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_item_servant_background_card"
     android:layout_width="100dp"
     android:layout_height="100dp"
     android:layout_margin="10dp"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,7 +17,7 @@
             android:id="@+id/list_item_servant_img"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
+            android:layout_margin="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
             android:background="@drawable/bg_dark_rounded_corner"
-            android:text="id"
             android:paddingHorizontal="5dp"
+            android:text="id"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/list_item_servant_img"
             app:layout_constraintEnd_toEndOf="@id/list_item_servant_img" />
