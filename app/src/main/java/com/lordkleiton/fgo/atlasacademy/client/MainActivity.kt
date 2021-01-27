@@ -1,11 +1,12 @@
 package com.lordkleiton.fgo.atlasacademy.client
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.RadioGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.nice.NiceServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.RequestsRepository
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.BasicServantListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.listener.OnListItemClickListener
@@ -13,6 +14,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 @ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
@@ -31,6 +34,10 @@ class MainActivity : AppCompatActivity() {
         loadServantsNA()
 
         setupRadio()
+
+        val intent = Intent()
+
+        intent.putExtra("", Json.encodeToString(NiceServant()))
     }
 
     private fun setupComponents() {
@@ -43,7 +50,13 @@ class MainActivity : AppCompatActivity() {
             mutableListOf(),
             object : OnListItemClickListener {
                 override fun onItemClick(servant: BasicServant, position: Int) {
-                    Toast.makeText(baseContext, servant.name, Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(baseContext, servant.name, Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(baseContext, ServantDetailsActivity::class.java).apply {
+                        putExtra("servant", Json.encodeToString(servant))
+                    }
+
+                    startActivity(intent)
                 }
             }
         )
