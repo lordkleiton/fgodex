@@ -60,7 +60,7 @@ class ServantDetailsActivity : AppCompatActivity() {
 
     private fun loadServant() {
         GlobalScope.launch(Dispatchers.Main) {
-            val result = NiceServantDAO.getServant(id, region)
+            val result = NiceServantDAO.get(id, region)
 
             if (result != null) {
                 niceServant = result

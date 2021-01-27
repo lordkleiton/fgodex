@@ -6,7 +6,8 @@ import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.RequestsRepository
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
+import com.lordkleiton.fgo.atlasacademy.client.app.dao.BasicServantDAO
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.BasicServantListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.listener.OnListItemClickListener
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION
@@ -63,15 +64,17 @@ class MainActivity : AppCompatActivity() {
         rv.adapter = adapter
     }
 
-    private fun loadServantsJP() {
-        GlobalScope.launch(Dispatchers.Main) {
-            RequestsRepository.basic.findAllServantEnglishName()?.forEach { adapter.add(it) }
-        }
-    }
+    private fun loadServantsJP() = loadServants(EnumRegion.JP)
 
-    private fun loadServantsNA() {
+    private fun loadServantsNA() = loadServants(EnumRegion.NA)
+
+    private fun loadServants(region: EnumRegion) {
         GlobalScope.launch(Dispatchers.Main) {
-            RequestsRepository.basic.findAllServant()?.forEach { adapter.add(it) }
+            var list = BasicServantDAO.available(region)
+
+            if (list.isEmpty()) list = BasicServantDAO.request(region)
+
+            list.forEach { if (it != null) adapter.add(it) }
         }
     }
 
