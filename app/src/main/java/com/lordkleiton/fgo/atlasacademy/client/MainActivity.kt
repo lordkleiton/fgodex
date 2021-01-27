@@ -3,6 +3,7 @@ package com.lordkleiton.fgo.atlasacademy.client
 import android.content.Intent
 import android.os.Bundle
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
@@ -10,6 +11,7 @@ import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
 import com.lordkleiton.fgo.atlasacademy.client.app.dao.BasicServantDAO
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.BasicServantListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.listener.OnListItemClickListener
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_REGION
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION_JP
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION_NA
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: BasicServantListAdapter
     private lateinit var rv: RecyclerView
     private lateinit var rg: RadioGroup
+    private var region = DEFAULT_REGION
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,15 +61,31 @@ class MainActivity : AppCompatActivity() {
 
                     startActivity(intent)
                 }
+
+                override fun onItemLongClick(servant: BasicServant, position: Int) {
+                    val other = BasicServantDAO.get(servant.id, region, false)
+                    val msg =
+                        if (region == EnumRegion.NA) servant.name else "${other?.name} | ${servant.name}"
+
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                }
             }
         )
 
         rv.adapter = adapter
     }
 
-    private fun loadServantsJP() = loadServants(EnumRegion.JP)
+    private fun loadServantsJP() {
+        region = EnumRegion.JP
 
-    private fun loadServantsNA() = loadServants(EnumRegion.NA)
+        loadServants(region)
+    }
+
+    private fun loadServantsNA() {
+        region = EnumRegion.NA
+
+        loadServants(region)
+    }
 
     private fun loadServants(region: EnumRegion) {
         GlobalScope.launch(Dispatchers.Main) {

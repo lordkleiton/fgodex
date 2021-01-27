@@ -8,5 +8,6 @@ object AppEnums {
     const val EXTRA_REGION_NA = "NA"
     const val EXTRA_REGION_JP = "JP"
     const val DEFAULT_ID = -1
+    const val DEFAULT_ENGLISH = true
     val DEFAULT_REGION = EnumRegion.NA
 }

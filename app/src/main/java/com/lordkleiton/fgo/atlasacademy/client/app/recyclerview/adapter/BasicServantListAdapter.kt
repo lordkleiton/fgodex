@@ -86,6 +86,12 @@ class BasicServantListAdapter(
                 setOnClickListener {
                     clickListener.onItemClick(servant, adapterPosition)
                 }
+
+                setOnLongClickListener {
+                    clickListener.onItemLongClick(servant, adapterPosition)
+
+                    true
+                }
             }
         }
 
