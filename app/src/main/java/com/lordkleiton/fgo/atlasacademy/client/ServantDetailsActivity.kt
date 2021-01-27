@@ -1,47 +1,68 @@
 package com.lordkleiton.fgo.atlasacademy.client
 
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.nice.NiceServant
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.util.ApiUtils
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.util.findEnumByName
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
 import com.lordkleiton.fgo.atlasacademy.client.app.dao.NiceServantDAO
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_ID
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_REGION
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION_NA
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_SERVANT_ID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class ServantDetailsActivity : AppCompatActivity() {
-    lateinit var basicServant: BasicServant
-    lateinit var niceServant: NiceServant
+    private lateinit var niceServant: NiceServant
+    private var region: EnumRegion = DEFAULT_REGION
+    private var id = DEFAULT_ID
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_servant_details)
 
-        setupBasicServant()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        loadNiceServant()
+        title = "OwO espera aí...."
 
-        title = "espera aí...."
+        setupExtras()
+
+        loadServant()
     }
 
-    private fun setupBasicServant() {
-        val extra = intent.getStringExtra("servant")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) finish()
 
-        if (extra != null) {
-            basicServant = ApiUtils.globalJson.decodeFromString(BasicServant.serializer(),
-                extra)
-        }
+        return super.onOptionsItemSelected(item)
     }
 
-    private fun loadNiceServant() {
+    private fun setupExtras() {
+        val string = intent.getStringExtra(EXTRA_REGION) ?: EXTRA_REGION_NA
+
+        region = findEnumByName<EnumRegion>(string) ?: region
+
+        id = intent.getIntExtra(EXTRA_SERVANT_ID, DEFAULT_ID)
+    }
+
+    private fun loadServant() {
         GlobalScope.launch(Dispatchers.Main) {
-            val result = NiceServantDAO.getServant(basicServant.id)
+            val result = NiceServantDAO.getServant(id, region)
 
             if (result != null) {
                 niceServant = result
 
                 title = result.name
+            } else {
+                val msg = "deu ruim UwU"
+
+                title = msg
+
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -9,12 +9,14 @@ import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.RequestsRepository
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.BasicServantListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.listener.OnListItemClickListener
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION_JP
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION_NA
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_SERVANT_ID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 @ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
@@ -46,7 +48,11 @@ class MainActivity : AppCompatActivity() {
             object : OnListItemClickListener {
                 override fun onItemClick(servant: BasicServant, position: Int) {
                     val intent = Intent(baseContext, ServantDetailsActivity::class.java).apply {
-                        putExtra("servant", Json.encodeToString(servant))
+                        putExtra(EXTRA_SERVANT_ID, servant.collectionNo)
+                        putExtra(EXTRA_REGION, when (rg.checkedRadioButtonId) {
+                            R.id.main_radio_na -> EXTRA_REGION_NA
+                            else -> EXTRA_REGION_JP
+                        })
                     }
 
                     startActivity(intent)
