@@ -2,6 +2,7 @@ package com.lordkleiton.fgo.atlasacademy.client
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.nice.NiceServant
@@ -18,6 +19,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class ServantDetailsActivity : AppCompatActivity() {
+    private lateinit var text: TextView
+
     private lateinit var niceServant: NiceServant
     private var region: EnumRegion = DEFAULT_REGION
     private var id = DEFAULT_ID
@@ -30,9 +33,15 @@ class ServantDetailsActivity : AppCompatActivity() {
 
         title = "OwO espera aí...."
 
+        setupViews()
+
         setupExtras()
 
         loadServant()
+    }
+
+    private fun setupViews() {
+        text = findViewById(R.id.servant_details_text)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -57,6 +66,12 @@ class ServantDetailsActivity : AppCompatActivity() {
                 niceServant = result
 
                 title = result.name
+
+                val regex = """[\[\]]""".toRegex()
+                val traits = result.traits.map { it.nameEnum }.toString()
+                    .replace(regex, "").replace(",", "\n")
+
+                text.text = traits
             } else {
                 val msg = "deu ruim UwU"
 
