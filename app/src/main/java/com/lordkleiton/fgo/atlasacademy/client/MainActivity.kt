@@ -6,7 +6,6 @@ import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.nice.NiceServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.RequestsRepository
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.BasicServantListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.listener.OnListItemClickListener
@@ -34,10 +33,6 @@ class MainActivity : AppCompatActivity() {
         loadServantsNA()
 
         setupRadio()
-
-        val intent = Intent()
-
-        intent.putExtra("", Json.encodeToString(NiceServant()))
     }
 
     private fun setupComponents() {
@@ -50,8 +45,6 @@ class MainActivity : AppCompatActivity() {
             mutableListOf(),
             object : OnListItemClickListener {
                 override fun onItemClick(servant: BasicServant, position: Int) {
-                    //Toast.makeText(baseContext, servant.name, Toast.LENGTH_SHORT).show()
-
                     val intent = Intent(baseContext, ServantDetailsActivity::class.java).apply {
                         putExtra("servant", Json.encodeToString(servant))
                     }

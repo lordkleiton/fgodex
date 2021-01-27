@@ -1,12 +1,12 @@
 package com.lordkleiton.fgo.atlasacademy.client
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.nice.NiceServant
-import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.RequestsRepository
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.util.ApiUtils
+import com.lordkleiton.fgo.atlasacademy.client.app.dao.NiceServantDAO
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -22,7 +22,7 @@ class ServantDetailsActivity : AppCompatActivity() {
 
         loadNiceServant()
 
-        title = basicServant.name
+        title = "espera aí...."
     }
 
     private fun setupBasicServant() {
@@ -35,13 +35,13 @@ class ServantDetailsActivity : AppCompatActivity() {
     }
 
     private fun loadNiceServant() {
-        GlobalScope.launch {
-            val result = RequestsRepository.nice.getServant(id = basicServant.id)
+        GlobalScope.launch(Dispatchers.Main) {
+            val result = NiceServantDAO.getServant(basicServant.id)
 
             if (result != null) {
                 niceServant = result
 
-                Log.i("hmm", niceServant.extraAssets.toString())
+                title = result.name
             }
         }
     }
