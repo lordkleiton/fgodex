@@ -15,7 +15,7 @@ data class NiceServantChange(
     val condType: String = FALLBACK_STRING,
     val condTargetId: Int = FALLBACK_INT,
     val condValue: Int = FALLBACK_INT,
-    val name: Int = FALLBACK_INT,
+    val name: String = FALLBACK_STRING,
     val svtVoiceId: Int = FALLBACK_INT,
     val limitCount: Int = FALLBACK_INT,
     val flag: Int = FALLBACK_INT,
