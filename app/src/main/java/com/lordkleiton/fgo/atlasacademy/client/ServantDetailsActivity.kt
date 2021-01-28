@@ -85,13 +85,9 @@ class ServantDetailsActivity : AppCompatActivity() {
                 val traits = result.traits.map { it.nameEnum }.toString()
                     .replace(regex, "").replace(",", "\n")
 
-                text.text = traits
+                //text.text = traits
 
                 adapter.submitList(niceServant.skills)
-
-//                Glide.with(baseContext)
-//                    .load(niceServant.extraAssets.charaGraph.ascension.toList().first().second)
-//                    .into(iv)
             } else {
                 val msg = "deu ruim UwU"
 
