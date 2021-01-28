@@ -2,10 +2,10 @@ package com.lordkleiton.fgo.atlasacademy.client
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.tabs.TabLayout
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
 import com.lordkleiton.fgo.atlasacademy.client.app.dao.BasicServantDAO
@@ -19,13 +19,11 @@ import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_SERVANT_
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.serialization.ExperimentalSerializationApi
 
-@ExperimentalSerializationApi
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: BasicServantListAdapter
     private lateinit var rv: RecyclerView
-    private lateinit var rg: RadioGroup
+    private lateinit var tl: TabLayout
     private var region = DEFAULT_REGION
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,12 +36,14 @@ class MainActivity : AppCompatActivity() {
 
         loadServantsNA()
 
-        setupRadio()
+        setupTabs()
     }
 
     private fun setupComponents() {
+        title = "Servants"
+
         rv = findViewById(R.id.main_lv)
-        rg = findViewById(R.id.main_radio_group)
+        tl = findViewById(R.id.main_tab)
     }
 
     private fun setupAdapter() {
@@ -53,9 +53,9 @@ class MainActivity : AppCompatActivity() {
                 override fun onItemClick(servant: BasicServant, position: Int) {
                     val intent = Intent(baseContext, ServantDetailsActivity::class.java).apply {
                         putExtra(EXTRA_SERVANT_ID, servant.collectionNo)
-                        putExtra(EXTRA_REGION, when (rg.checkedRadioButtonId) {
-                            R.id.main_radio_na -> EXTRA_REGION_NA
-                            else -> EXTRA_REGION_JP
+                        putExtra(EXTRA_REGION, when (region) {
+                            EnumRegion.NA -> EXTRA_REGION_NA
+                            EnumRegion.JP -> EXTRA_REGION_JP
                         })
                     }
 
@@ -97,14 +97,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupRadio() {
-        rg.setOnCheckedChangeListener { _, i: Int ->
-            adapter.clear()
+    private fun setupTabs() {
+        tl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
 
-            when (i) {
-                R.id.main_radio_na -> loadServantsNA()
-                R.id.main_radio_jp -> loadServantsJP()
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.position.apply {
+                    adapter.clear()
+
+                    when (this) {
+                        0 -> loadServantsNA()
+                        else -> loadServantsJP()
+                    }
+                }
             }
-        }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+        })
     }
 }

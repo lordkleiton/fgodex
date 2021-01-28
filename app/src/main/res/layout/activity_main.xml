@@ -6,36 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-    <RadioGroup
-        android:id="@+id/main_radio_group"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/main_tab"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/main_radio_na"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:checked="true"
-            android:text="@string/region_na"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/region_na" />
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/main_radio_jp"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/region_jp"
-            app:layout_constraintStart_toEndOf="@id/main_radio_na"
-            app:layout_constraintTop_toTopOf="@id/main_radio_na" />
-
-    </RadioGroup>
+            android:text="@string/region_jp" />
+    </com.google.android.material.tabs.TabLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_lv"
@@ -45,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_radio_group"
+        app:layout_constraintTop_toBottomOf="@id/main_tab"
         app:spanCount="3"
         tools:itemCount="5"
         tools:listitem="@layout/list_item_servant" />
