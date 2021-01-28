@@ -36,31 +36,31 @@ class BasicServantListAdapter(
         return BasicServantViewHolder(view, context, onItemClickListener)
     }
 
-    val clear = {
+    fun clear() {
         items.clear()
 
         notifyDataSetChanged()
     }
 
-    val swap = { posInit: Int, posEnd: Int ->
+    fun swap(posInit: Int, posEnd: Int) {
         Collections.swap(items, posInit, posEnd)
 
         notifyItemMoved(posInit, posEnd)
     }
 
-    val remove = { pos: Int ->
+    fun remove(pos: Int) {
         items.removeAt(pos)
 
         notifyItemRemoved(pos)
     }
 
-    val add = { servant: BasicServant ->
+    fun add(servant: BasicServant) {
         items.add(servant)
 
         notifyItemInserted(items.lastIndex)
     }
 
-    val update = { pos: Int, servant: BasicServant ->
+    fun update(pos: Int, servant: BasicServant) {
         items[pos] = servant
 
         notifyItemChanged(pos)
