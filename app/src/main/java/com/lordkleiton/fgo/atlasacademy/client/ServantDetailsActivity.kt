@@ -5,10 +5,12 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.nice.NiceServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.util.findEnumByName
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
 import com.lordkleiton.fgo.atlasacademy.client.app.dao.NiceServantDAO
+import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.SkillListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_ID
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_REGION
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION
@@ -20,10 +22,13 @@ import kotlinx.coroutines.launch
 
 class ServantDetailsActivity : AppCompatActivity() {
     private lateinit var text: TextView
+    private lateinit var rv: RecyclerView
+    private lateinit var adapter: SkillListAdapter
 
     private lateinit var niceServant: NiceServant
     private var region: EnumRegion = DEFAULT_REGION
     private var id = DEFAULT_ID
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +42,20 @@ class ServantDetailsActivity : AppCompatActivity() {
 
         setupExtras()
 
+        setupAdapter()
+
         loadServant()
     }
 
     private fun setupViews() {
         text = findViewById(R.id.servant_details_text)
+        rv = findViewById(R.id.servant_details_rv)
+    }
+
+    private fun setupAdapter() {
+        adapter = SkillListAdapter(baseContext)
+
+        rv.adapter = adapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -72,6 +86,12 @@ class ServantDetailsActivity : AppCompatActivity() {
                     .replace(regex, "").replace(",", "\n")
 
                 text.text = traits
+
+                adapter.submitList(niceServant.skills)
+
+//                Glide.with(baseContext)
+//                    .load(niceServant.extraAssets.charaGraph.ascension.toList().first().second)
+//                    .into(iv)
             } else {
                 val msg = "deu ruim UwU"
 
