@@ -25,11 +25,12 @@ object BasicServantDAO {
     suspend fun request(
         region: EnumRegion = DEFAULT_REGION,
     ): List<BasicServant?> {
+        val map = selectMap(region, !DEFAULT_ENGLISH)
+
+        RequestsRepository.basic.findAllServant(region)?.forEach { map[it.id] = it }
+
         if (region == EnumRegion.JP) {
-            RequestsRepository.basic.findAllServant(region)?.forEach { JP[it.id] = it }
             RequestsRepository.basic.findAllServantEnglishName()?.forEach { JP_EN[it.id] = it }
-        } else {
-            RequestsRepository.basic.findAllServant(region)?.forEach { NA[it.id] = it }
         }
 
         return available(region)
