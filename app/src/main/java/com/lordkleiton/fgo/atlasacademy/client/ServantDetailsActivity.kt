@@ -19,6 +19,8 @@ import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_REGION
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION_NA
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_SERVANT_ID
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.JAPANESE_OPENING_PARENTHESIS
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.NEW_JAPANESE_OPENING_PARENTHESIS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -98,7 +100,8 @@ class ServantDetailsActivity : AppCompatActivity() {
     private fun onLoadSuccess(servant: NiceServant) {
         nice = servant
 
-        primaryName.text = nice.name
+        primaryName.text =
+            nice.name.replace(JAPANESE_OPENING_PARENTHESIS, NEW_JAPANESE_OPENING_PARENTHESIS)
 
         skillListAdapter.submitList(nice.skills)
 
