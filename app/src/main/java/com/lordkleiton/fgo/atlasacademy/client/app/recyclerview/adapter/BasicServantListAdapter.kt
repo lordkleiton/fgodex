@@ -10,11 +10,11 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.lordkleiton.fgo.atlasacademy.client.R
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.listener.OnListItemClickListener
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_IMAGE_CROP
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_IMAGE_ROUNDING
 import java.util.*
 
 class BasicServantListAdapter(
@@ -114,7 +114,7 @@ class BasicServantListAdapter(
 
             Glide.with(context).load(servant.face).placeholder(R.drawable.ic_launcher_foreground)
                 .transform(
-                    CenterCrop(), RoundedCorners(20))
+                    DEFAULT_IMAGE_CROP, DEFAULT_IMAGE_ROUNDING)
                 .into(img)
         }
     }

@@ -1,5 +1,7 @@
 package com.lordkleiton.fgo.atlasacademy.client.app.utils
 
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
 
 object AppEnums {
@@ -13,5 +15,10 @@ object AppEnums {
     const val JAPANESE_OPENING_PARENTHESIS = "〔"
     const val NEW_JAPANESE_OPENING_PARENTHESIS = "$NEW_LINE$JAPANESE_OPENING_PARENTHESIS"
     const val JAPANESE_CLOSING_PARENTHESIS = "〕"
+    const val DEFAULT_ROUNDING_RADIUS = 20
+    const val RATIO_SERVANT_PORTRAIT = 1.4140625 // 512x724 px
+
     val DEFAULT_REGION = EnumRegion.NA
+    val DEFAULT_IMAGE_CROP = CenterCrop()
+    val DEFAULT_IMAGE_ROUNDING = RoundedCorners(DEFAULT_ROUNDING_RADIUS)
 }

@@ -13,6 +13,7 @@ import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.util.findEnumByName
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
 import com.lordkleiton.fgo.atlasacademy.client.app.dao.BasicServantDAO
 import com.lordkleiton.fgo.atlasacademy.client.app.dao.NiceServantDAO
+import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.ImageListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.SkillListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_ID
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_REGION
@@ -21,6 +22,7 @@ import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION_N
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_SERVANT_ID
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.JAPANESE_OPENING_PARENTHESIS
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.NEW_JAPANESE_OPENING_PARENTHESIS
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.RATIO_SERVANT_PORTRAIT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,11 +32,15 @@ class ServantDetailsActivity : AppCompatActivity() {
     private lateinit var secondaryName: TextView
     private lateinit var skillsRV: RecyclerView
     private lateinit var skillListAdapter: SkillListAdapter
+    private lateinit var portraitsRV: RecyclerView
+    private lateinit var portraitListAdapter: ImageListAdapter
 
     private lateinit var nice: NiceServant
     private var basic: BasicServant? = null
     private var region: EnumRegion = DEFAULT_REGION
     private var id = DEFAULT_ID
+    private val height = 300
+    private val width = (height / RATIO_SERVANT_PORTRAIT).toInt()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +52,7 @@ class ServantDetailsActivity : AppCompatActivity() {
 
         setupExtras()
 
-        setupAdapter()
+        setupAdapters()
 
         loadServant()
     }
@@ -63,12 +69,16 @@ class ServantDetailsActivity : AppCompatActivity() {
         secondaryName = findViewById(R.id.servant_details_secondary_name)
 
         skillsRV = findViewById(R.id.servant_details_rv)
+
+        portraitsRV = findViewById(R.id.servant_details_rv_img)
     }
 
-    private fun setupAdapter() {
+    private fun setupAdapters() {
         skillListAdapter = SkillListAdapter(baseContext)
-
         skillsRV.adapter = skillListAdapter
+
+        portraitListAdapter = ImageListAdapter(baseContext, width, height)
+        portraitsRV.adapter = portraitListAdapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -110,6 +120,17 @@ class ServantDetailsActivity : AppCompatActivity() {
 
             if (region == EnumRegion.NA) secondaryName.visibility = View.GONE
         }
+
+        setupImages()
+    }
+
+    private fun setupImages() {
+        val list = mutableListOf<String>()
+
+        list.addAll(nice.extraAssets.charaGraph.ascension.map { it.value })
+        list.addAll(nice.extraAssets.charaGraph.costume.map { it.value })
+
+        portraitListAdapter.submitList(list)
     }
 
     private fun onLoadFailure() {
