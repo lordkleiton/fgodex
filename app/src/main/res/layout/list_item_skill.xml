@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list_item_skill_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,7 +22,6 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
-            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,26 +31,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="nome"
             android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/list_item_skill_card_desc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/list_item_skill_card_img"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="nome" />
 
         <TextView
             android:id="@+id/list_item_skill_card_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="descrição"
             android:textAlignment="center"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/list_item_skill_card_name"
             app:layout_constraintStart_toStartOf="@id/list_item_skill_card_name"
-            app:layout_constraintTop_toBottomOf="@id/list_item_skill_card_name" />
+            app:layout_constraintTop_toBottomOf="@id/list_item_skill_card_name"
+            tools:text="descrição" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

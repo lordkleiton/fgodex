@@ -8,7 +8,6 @@ import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_REGION
 object NiceServantDAO {
     private val NA = mutableMapOf<Int, NiceServant?>()
     private val JP = mutableMapOf<Int, NiceServant?>()
-    private val JP_EN = mutableMapOf<Int, NiceServant?>()
 
     private fun selectMap(region: EnumRegion) = when (region) {
         EnumRegion.NA -> NA

@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             object : OnListItemClickListener {
                 override fun onItemClick(servant: BasicServant, position: Int) {
                     val intent = Intent(baseContext, ServantDetailsActivity::class.java).apply {
-                        putExtra(EXTRA_SERVANT_ID, servant.collectionNo)
+                        putExtra(EXTRA_SERVANT_ID, servant.id)
                         putExtra(EXTRA_REGION, when (region) {
                             EnumRegion.NA -> EXTRA_REGION_NA
                             EnumRegion.JP -> EXTRA_REGION_JP
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
             if (list.isEmpty()) list = BasicServantDAO.request(region)
 
-            list.forEach { if (it != null) adapter.add(it) }
+            list.forEach { adapter.add(it) }
         }
     }
 

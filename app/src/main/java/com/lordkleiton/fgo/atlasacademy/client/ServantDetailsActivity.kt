@@ -2,13 +2,16 @@ package com.lordkleiton.fgo.atlasacademy.client
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.nice.NiceServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.util.findEnumByName
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
+import com.lordkleiton.fgo.atlasacademy.client.app.dao.BasicServantDAO
 import com.lordkleiton.fgo.atlasacademy.client.app.dao.NiceServantDAO
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.SkillListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_ID
@@ -21,22 +24,21 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class ServantDetailsActivity : AppCompatActivity() {
-    private lateinit var text: TextView
-    private lateinit var rv: RecyclerView
-    private lateinit var adapter: SkillListAdapter
+    private lateinit var primaryName: TextView
+    private lateinit var secondaryName: TextView
+    private lateinit var skillsRV: RecyclerView
+    private lateinit var skillListAdapter: SkillListAdapter
 
-    private lateinit var niceServant: NiceServant
+    private lateinit var nice: NiceServant
+    private var basic: BasicServant? = null
     private var region: EnumRegion = DEFAULT_REGION
     private var id = DEFAULT_ID
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_servant_details)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        title = "OwO espera aí...."
+        setupActionBar()
 
         setupViews()
 
@@ -47,15 +49,24 @@ class ServantDetailsActivity : AppCompatActivity() {
         loadServant()
     }
 
+    private fun setupActionBar() {
+        title = "Details"
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
     private fun setupViews() {
-        text = findViewById(R.id.servant_details_text)
-        rv = findViewById(R.id.servant_details_rv)
+        primaryName = findViewById(R.id.servant_details_primary_name)
+
+        secondaryName = findViewById(R.id.servant_details_secondary_name)
+
+        skillsRV = findViewById(R.id.servant_details_rv)
     }
 
     private fun setupAdapter() {
-        adapter = SkillListAdapter(baseContext)
+        skillListAdapter = SkillListAdapter(baseContext)
 
-        rv.adapter = adapter
+        skillsRV.adapter = skillListAdapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -67,7 +78,7 @@ class ServantDetailsActivity : AppCompatActivity() {
     private fun setupExtras() {
         val string = intent.getStringExtra(EXTRA_REGION) ?: EXTRA_REGION_NA
 
-        region = findEnumByName<EnumRegion>(string) ?: region
+        region = findEnumByName<EnumRegion>(string) ?: DEFAULT_REGION
 
         id = intent.getIntExtra(EXTRA_SERVANT_ID, DEFAULT_ID)
     }
@@ -77,24 +88,30 @@ class ServantDetailsActivity : AppCompatActivity() {
             val result = NiceServantDAO.get(id, region)
 
             if (result != null) {
-                niceServant = result
-
-                title = result.name
-
-                val regex = """[\[\]]""".toRegex()
-                val traits = result.traits.map { it.nameEnum }.toString()
-                    .replace(regex, "").replace(",", "\n")
-
-                //text.text = traits
-
-                adapter.submitList(niceServant.skills)
+                onLoadSuccess(result)
             } else {
-                val msg = "deu ruim UwU"
-
-                title = msg
-
-                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                onLoadFailure()
             }
         }
+    }
+
+    private fun onLoadSuccess(servant: NiceServant) {
+        nice = servant
+
+        primaryName.text = nice.name
+
+        skillListAdapter.submitList(nice.skills)
+
+        basic = BasicServantDAO.get(nice.id, region)?.apply {
+            secondaryName.text = name
+
+            if (region == EnumRegion.NA) secondaryName.visibility = View.GONE
+        }
+    }
+
+    private fun onLoadFailure() {
+        val msg = "deu ruim UwU"
+
+        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
     }
 }

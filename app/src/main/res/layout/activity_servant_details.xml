@@ -6,23 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".ServantDetailsActivity">
 
+
     <TextView
-        android:id="@+id/servant_details_text"
-        android:layout_width="wrap_content"
+        android:id="@+id/servant_details_primary_name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Nome principal" />
+
+    <TextView
+        android:id="@+id/servant_details_secondary_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@id/servant_details_primary_name"
+        app:layout_constraintStart_toStartOf="@id/servant_details_primary_name"
+        app:layout_constraintTop_toBottomOf="@id/servant_details_primary_name"
+        tools:text="segundo nome" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/servant_details_rv"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/servant_details_text"
+        app:layout_constraintTop_toBottomOf="@id/servant_details_secondary_name"
         tools:itemCount="3"
         tools:listitem="@layout/list_item_skill" />
 

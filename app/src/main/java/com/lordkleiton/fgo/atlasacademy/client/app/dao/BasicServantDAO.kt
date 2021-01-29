@@ -7,9 +7,9 @@ import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_ENGLIS
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_REGION
 
 object BasicServantDAO {
-    private val NA = mutableMapOf<Int, BasicServant?>()
-    private val JP = mutableMapOf<Int, BasicServant?>()
-    private val JP_EN = mutableMapOf<Int, BasicServant?>()
+    private val NA = mutableMapOf<Int, BasicServant>()
+    private val JP = mutableMapOf<Int, BasicServant>()
+    private val JP_EN = mutableMapOf<Int, BasicServant>()
 
     private fun selectMap(region: EnumRegion, english: Boolean) = when (region) {
         EnumRegion.NA -> NA
@@ -24,7 +24,7 @@ object BasicServantDAO {
 
     suspend fun request(
         region: EnumRegion = DEFAULT_REGION,
-    ): List<BasicServant?> {
+    ): List<BasicServant> {
         val map = selectMap(region, !DEFAULT_ENGLISH)
 
         RequestsRepository.basic.findAllServant(region)?.forEach { map[it.id] = it }
@@ -40,6 +40,5 @@ object BasicServantDAO {
         id: Int,
         region: EnumRegion = DEFAULT_REGION,
         english: Boolean = DEFAULT_ENGLISH,
-    ): BasicServant? =
-        selectMap(region, english)[id]
+    ) = selectMap(region, english)[id]
 }
