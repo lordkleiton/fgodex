@@ -37,33 +37,30 @@
             tools:text="segundo nome" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/servant_details_rv"
+            android:id="@+id/servant_details_rv_img"
             android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/servant_details_secondary_name"
             tools:itemCount="3"
-            tools:listitem="@layout/list_item_skill" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/servant_details_rv_img"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/servant_details_rv"
-            tools:itemCount="3"
             tools:listitem="@layout/list_item_image_holder" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/servant_details_rv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/servant_details_rv_img"
+            tools:itemCount="3"
+            tools:listitem="@layout/list_item_skill" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
