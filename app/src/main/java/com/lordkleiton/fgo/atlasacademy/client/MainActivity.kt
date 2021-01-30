@@ -63,11 +63,13 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 override fun onItemLongClick(servant: BasicServant, position: Int) {
-                    val other = BasicServantDAO.get(servant.id, region, false)
-                    val msg =
-                        if (region == EnumRegion.NA) servant.name else "${other?.name} | ${servant.name}"
+                    GlobalScope.launch(Dispatchers.Main) {
+                        val other = BasicServantDAO.get(servant.id, region, false)
+                        val msg =
+                            if (region == EnumRegion.NA) servant.name else "${other?.name} | ${servant.name}"
 
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         )

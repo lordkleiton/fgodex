@@ -1,8 +1,9 @@
 package com.lordkleiton.fgo.atlasacademy.client
 
+import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +43,8 @@ class ServantDetailsActivity : AppCompatActivity() {
     private val height = 300
     private val width = (height / RATIO_SERVANT_PORTRAIT).toInt()
 
+    private lateinit var mediaPlayer: MediaPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_servant_details)
@@ -71,6 +74,8 @@ class ServantDetailsActivity : AppCompatActivity() {
         skillsRV = findViewById(R.id.servant_details_rv)
 
         portraitsRV = findViewById(R.id.servant_details_rv_img)
+
+        mediaPlayer = MediaPlayer()
     }
 
     private fun setupAdapters() {
@@ -107,7 +112,12 @@ class ServantDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun onLoadSuccess(servant: NiceServant) {
+    private fun oppositeRegion(): EnumRegion = when (region) {
+        EnumRegion.NA -> EnumRegion.JP
+        EnumRegion.JP -> EnumRegion.NA
+    }
+
+    private suspend fun onLoadSuccess(servant: NiceServant) {
         nice = servant
 
         primaryName.text =
@@ -115,13 +125,37 @@ class ServantDetailsActivity : AppCompatActivity() {
 
         skillListAdapter.submitList(nice.skills)
 
-        basic = BasicServantDAO.get(nice.id, region)?.apply {
+        basic = BasicServantDAO.get(nice.id, oppositeRegion(), region == EnumRegion.JP)?.apply {
             secondaryName.text = name
-
-            if (region == EnumRegion.NA) secondaryName.visibility = View.GONE
         }
 
         setupImages()
+
+        //playAudio()
+    }
+
+    private fun playAudio() {
+        if (nice.profile.voices.isNotEmpty()) {
+            val url = nice.profile.voices.first().voiceLines.first().audioAssets.first()
+
+            mediaPlayer.apply {
+                setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                        .setUsage(AudioAttributes.USAGE_MEDIA)
+                        .build()
+                )
+                setDataSource(url)
+                prepare() // might take long! (for buffering, etc)
+                start()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        mediaPlayer.stop()
+
+        super.onDestroy()
     }
 
     private fun setupImages() {
