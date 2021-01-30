@@ -5,15 +5,24 @@ import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.RequestsRepositor
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
 import com.lordkleiton.fgo.atlasacademy.client.app.dao.model.DataHolder
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_REGION
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.opposite
 
 object BasicServantDAO {
     private val NA = DataHolder<BasicServant>()
     private val JP = DataHolder<BasicServant>()
+    private val JP_EN = DataHolder<BasicServant>()
 
-    private fun selectHolder(region: EnumRegion) = when (region) {
-        EnumRegion.NA -> NA
-        EnumRegion.JP -> JP
-    }
+    private fun selectHolder(region: EnumRegion) =
+        when (region) {
+            EnumRegion.NA -> NA
+            EnumRegion.JP -> JP
+        }
+
+    private fun selectOppositeHolder(region: EnumRegion) =
+        when (region) {
+            EnumRegion.NA -> JP_EN
+            EnumRegion.JP -> JP
+        }
 
     private fun toList(region: EnumRegion) =
         selectHolder(region).map.toList().map { it.second }.sortedBy { it.collectionNo }
@@ -33,23 +42,22 @@ object BasicServantDAO {
     suspend fun find(region: EnumRegion = DEFAULT_REGION) =
         if (selectHolder(region).init) toList(region) else request(region)
 
-    suspend fun get(
-        id: Int,
-        region: EnumRegion = DEFAULT_REGION,
-    ): BasicServant? {
-        val holder = selectHolder(region).map
-        var result = holder[id]
+    private suspend fun getServant(id: Int, english: Boolean) =
+        RequestsRepository.basic.getServant(
+            EnumRegion.JP,
+            id,
+            if (english) mapOf("lang" to "en") else mapOf())
 
-        if (result == null) {
-            val req = RequestsRepository.basic.getServant(region, id)
+    suspend fun complementaryServant(id: Int, region: EnumRegion): BasicServant? {
+        val aux = region.opposite()
+        val holder = selectOppositeHolder(aux)
 
-            if (req != null) {
-                result = req
+        return holder.map[id] ?: suspend {
+            val req = getServant(id, aux == EnumRegion.NA)
 
-                holder[id] = result
-            }
-        }
+            if (req != null) holder.map[id] = req
 
-        return result
+            req
+        }.invoke()
     }
 }

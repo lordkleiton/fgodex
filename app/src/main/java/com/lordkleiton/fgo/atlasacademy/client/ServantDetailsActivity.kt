@@ -24,7 +24,6 @@ import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_SERVANT_
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.JAPANESE_OPENING_PARENTHESIS
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.NEW_JAPANESE_OPENING_PARENTHESIS
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.RATIO_SERVANT_PORTRAIT
-import com.lordkleiton.fgo.atlasacademy.client.app.utils.opposite
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -121,7 +120,7 @@ class ServantDetailsActivity : AppCompatActivity() {
 
         skillListAdapter.submitList(nice.skills)
 
-        basic = BasicServantDAO.get(nice.id, region.opposite())?.apply {
+        basic = BasicServantDAO.complementaryServant(nice.id, region)?.apply {
             secondaryName.text = name
         }
 
@@ -149,7 +148,7 @@ class ServantDetailsActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        mediaPlayer.stop()
+        mediaPlayer.release()
 
         super.onDestroy()
     }
