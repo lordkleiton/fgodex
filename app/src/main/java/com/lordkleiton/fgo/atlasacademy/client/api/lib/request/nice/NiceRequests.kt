@@ -52,67 +52,80 @@ object NiceRequests : BaseRequests(EnumType.nice) {
     suspend fun getServant(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceServant? = get(EnumEndpoint.servant, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceServant? = get(EnumEndpoint.servant, region, id, options)
 
     suspend fun getEquip(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceEquip? = get(EnumEndpoint.equip, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceEquip? = get(EnumEndpoint.equip, region, id, options)
 
     suspend fun getSvt(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceServant? = get(EnumEndpoint.svt, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceServant? = get(EnumEndpoint.svt, region, id, options)
 
     suspend fun getMC(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceMysticCode? = get(EnumEndpoint.MC, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceMysticCode? = get(EnumEndpoint.MC, region, id, options)
 
     suspend fun getCC(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceCommandCode? = get(EnumEndpoint.CC, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceCommandCode? = get(EnumEndpoint.CC, region, id, options)
 
     suspend fun getSkill(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceSkill? = get(EnumEndpoint.skill, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceSkill? = get(EnumEndpoint.skill, region, id, options)
 
     suspend fun getNP(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceTdReverse? = get(EnumEndpoint.NP, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceTdReverse? = get(EnumEndpoint.NP, region, id, options)
 
     suspend fun getFunction(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceFunction? = get(EnumEndpoint.function, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceFunction? = get(EnumEndpoint.function, region, id, options)
 
     suspend fun getBuff(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceBuff? = get(EnumEndpoint.buff, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceBuff? = get(EnumEndpoint.buff, region, id, options)
 
     suspend fun getItem(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceItem? = get(EnumEndpoint.item, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceItem? = get(EnumEndpoint.item, region, id, options)
 
     suspend fun getEvent(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceEvent? = get(EnumEndpoint.event, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceEvent? = get(EnumEndpoint.event, region, id, options)
 
     suspend fun getWar(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceWar? = get(EnumEndpoint.war, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceWar? = get(EnumEndpoint.war, region, id, options)
 
     suspend fun getQuest(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): NiceQuest? = get(EnumEndpoint.quest, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): NiceQuest? = get(EnumEndpoint.quest, region, id, options)
 
     /* findAll */
 

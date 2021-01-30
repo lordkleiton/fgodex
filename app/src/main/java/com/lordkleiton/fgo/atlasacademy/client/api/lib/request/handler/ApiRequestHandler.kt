@@ -25,6 +25,7 @@ object ApiRequestHandler {
             options.region.name,
             options.endpoint.name,
             options.id.toString(),
+            options.options,
         )
 
         return handleCall<T>(call)

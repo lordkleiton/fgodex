@@ -9,4 +9,5 @@ data class GetModel(
     val region: EnumRegion = EnumRegion.NA,
     val endpoint: EnumEndpoint = EnumEndpoint.servant,
     val id: Int = 1,
+    val options: Map<String, String> = mapOf("lore" to "true"),
 )

@@ -56,65 +56,78 @@ object RawRequests : BaseRequests(EnumType.raw) {
     suspend fun getServant(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): OtherServantEntity? = get(EnumEndpoint.servant, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): OtherServantEntity? = get(EnumEndpoint.servant, region, id, options)
 
     suspend fun getEquip(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): OtherServantEntity? = get(EnumEndpoint.equip, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): OtherServantEntity? = get(EnumEndpoint.equip, region, id, options)
 
     suspend fun getSvt(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): OtherServantEntity? = get(EnumEndpoint.svt, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): OtherServantEntity? = get(EnumEndpoint.svt, region, id, options)
 
     suspend fun getMC(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): OtherMysticCodeEntity? = get(EnumEndpoint.MC, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): OtherMysticCodeEntity? = get(EnumEndpoint.MC, region, id, options)
 
     suspend fun getCC(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): OtherCommandCodeEntity? = get(EnumEndpoint.CC, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): OtherCommandCodeEntity? = get(EnumEndpoint.CC, region, id, options)
 
     suspend fun getSkill(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): SkillEntity? = get(EnumEndpoint.skill, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): SkillEntity? = get(EnumEndpoint.skill, region, id, options)
 
     suspend fun getNP(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): TdEntity? = get(EnumEndpoint.NP, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): TdEntity? = get(EnumEndpoint.NP, region, id, options)
 
     suspend fun getFunction(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): FunctionEntity? = get(EnumEndpoint.function, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): FunctionEntity? = get(EnumEndpoint.function, region, id, options)
 
     suspend fun getBuff(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BuffEntity? = get(EnumEndpoint.buff, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BuffEntity? = get(EnumEndpoint.buff, region, id, options)
 
     suspend fun getItem(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): OtherItemEntity? = get(EnumEndpoint.item, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): OtherItemEntity? = get(EnumEndpoint.item, region, id, options)
 
     suspend fun getEvent(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): OtherEventEntity? = get(EnumEndpoint.event, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): OtherEventEntity? = get(EnumEndpoint.event, region, id, options)
 
     suspend fun getWar(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): OtherWarEntity? = get(EnumEndpoint.war, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): OtherWarEntity? = get(EnumEndpoint.war, region, id, options)
 
     suspend fun getQuest(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): OtherQuestEntity? = get(EnumEndpoint.quest, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): OtherQuestEntity? = get(EnumEndpoint.quest, region, id, options)
 }

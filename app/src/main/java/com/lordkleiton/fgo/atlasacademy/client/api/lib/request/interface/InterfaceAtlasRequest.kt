@@ -20,6 +20,7 @@ interface InterfaceAtlasRequest {
         @Path(URL_REGION) region: String,
         @Path(URL_ENDPOINT) endpoint: String,
         @Path(URL_ID) id: String,
+        @QueryMap options: Map<String, String>,
     ): Call<JsonElement>
 
     @GET(FIND_URL)

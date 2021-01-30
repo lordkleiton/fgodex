@@ -52,57 +52,68 @@ object BasicRequests : BaseRequests(EnumType.basic) {
     suspend fun getServant(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicServant? = get(EnumEndpoint.servant, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicServant? = get(EnumEndpoint.servant, region, id, options)
 
     suspend fun getEquip(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicEquip? = get(EnumEndpoint.equip, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicEquip? = get(EnumEndpoint.equip, region, id, options)
 
     suspend fun getSvt(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicServant? = get(EnumEndpoint.servant, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicServant? = get(EnumEndpoint.servant, region, id, options)
 
     suspend fun getMC(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicMysticCode? = get(EnumEndpoint.MC, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicMysticCode? = get(EnumEndpoint.MC, region, id, options)
 
     suspend fun getCC(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicCommandCode? = get(EnumEndpoint.CC, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicCommandCode? = get(EnumEndpoint.CC, region, id, options)
 
     suspend fun getSkill(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicSkillReverse? = get(EnumEndpoint.skill, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicSkillReverse? = get(EnumEndpoint.skill, region, id, options)
 
     suspend fun getNP(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicTdReverse? = get(EnumEndpoint.NP, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicTdReverse? = get(EnumEndpoint.NP, region, id, options)
 
     suspend fun getFunction(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicFunctionReverse? = get(EnumEndpoint.function, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicFunctionReverse? = get(EnumEndpoint.function, region, id, options)
 
     suspend fun getBuff(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicBuff? = get(EnumEndpoint.buff, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicBuff? = get(EnumEndpoint.buff, region, id, options)
 
     suspend fun getEvent(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicEvent? = get(EnumEndpoint.event, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicEvent? = get(EnumEndpoint.event, region, id, options)
 
     suspend fun getWar(
         region: EnumRegion = baseFind.region,
         id: Int = baseGet.id,
-    ): BasicWar? = get(EnumEndpoint.war, region, id)
+        options: Map<String, String> = baseGet.options,
+    ): BasicWar? = get(EnumEndpoint.war, region, id, options)
 
     /* findAll */
 

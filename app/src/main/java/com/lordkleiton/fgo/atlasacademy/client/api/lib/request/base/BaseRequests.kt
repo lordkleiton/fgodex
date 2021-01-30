@@ -20,8 +20,8 @@ open class BaseRequests(enumType: EnumType) {
     ) = ApiRequestHandler.find<T>(FindModel(baseFind.type, r, e, o))
 
     protected suspend inline fun <reified T> get(
-        e: EnumEndpoint, r: EnumRegion, i: Int,
-    ) = ApiRequestHandler.get<T>(GetModel(baseGet.type, r, e, i))
+        e: EnumEndpoint, r: EnumRegion, i: Int, o: Map<String, String>
+    ) = ApiRequestHandler.get<T>(GetModel(baseGet.type, r, e, i, o))
 
     protected suspend inline fun <reified T> findAll(
         e: EnumExportEndpoint,
