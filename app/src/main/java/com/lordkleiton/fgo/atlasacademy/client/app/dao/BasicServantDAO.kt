@@ -36,9 +36,24 @@ object BasicServantDAO {
         return available(region)
     }
 
-    fun get(
+    suspend fun get(
         id: Int,
         region: EnumRegion = DEFAULT_REGION,
         english: Boolean = DEFAULT_ENGLISH,
-    ) = selectMap(region, english)[id]
+    ): BasicServant? {
+        val map = selectMap(region, english)
+        var result = map[id]
+
+        if (result == null) {
+            val req = RequestsRepository.basic.getServant(region, id)
+
+            if (req != null) {
+                result = req
+
+                map[id] = result
+            }
+        }
+
+        return result
+    }
 }
