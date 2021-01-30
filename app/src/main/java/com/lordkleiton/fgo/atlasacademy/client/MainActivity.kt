@@ -16,6 +16,7 @@ import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION_JP
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_REGION_NA
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.EXTRA_SERVANT_ID
+import com.lordkleiton.fgo.atlasacademy.client.app.utils.opposite
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -64,9 +65,8 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onItemLongClick(servant: BasicServant, position: Int) {
                     GlobalScope.launch(Dispatchers.Main) {
-                        val other = BasicServantDAO.get(servant.id, region, false)
-                        val msg =
-                            if (region == EnumRegion.NA) servant.name else "${other?.name} | ${servant.name}"
+                        val other = BasicServantDAO.get(servant.id, region.opposite())
+                        val msg = "${servant.name} | ${other?.name}"
 
                         Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     }
@@ -91,11 +91,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadServants(region: EnumRegion) {
         GlobalScope.launch(Dispatchers.Main) {
-            var list = BasicServantDAO.available(region)
-
-            if (list.isEmpty()) list = BasicServantDAO.request(region)
-
-            list.forEach { adapter.add(it) }
+            BasicServantDAO.find(region).forEach { adapter.add(it) }
         }
     }
 
