@@ -27,6 +27,8 @@ import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.RATIO_SERVANT_
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.math.round
+
 
 class ServantDetailsActivity : AppCompatActivity() {
     private lateinit var primaryName: TextView
@@ -126,7 +128,7 @@ class ServantDetailsActivity : AppCompatActivity() {
 
         setupImages()
 
-        //playAudio()
+        playAudio()
     }
 
     private fun playAudio() {
@@ -141,9 +143,31 @@ class ServantDetailsActivity : AppCompatActivity() {
                         .build()
                 )
                 setDataSource(url)
-                prepare() // might take long! (for buffering, etc)
-                start()
+
+                prepareAsync()
+
+                setOnPreparedListener { mp ->
+                    mp.start()
+
+                    secondaryName.post(mUpdateTime)
+                }
             }
+
+
+        }
+    }
+
+    private val mUpdateTime: Runnable = object : Runnable {
+        override fun run() {
+            if (mediaPlayer.isPlaying) {
+                val currentDuration =
+                    (mediaPlayer.currentPosition * 100) / mediaPlayer.duration + 1
+
+                secondaryName.text = currentDuration.toString()
+
+                secondaryName.postDelayed(this, 1)
+            }
+
         }
     }
 

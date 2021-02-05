@@ -96,7 +96,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupTabs() {
         tl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                rv.smoothScrollToPosition(0)
+            }
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.position.apply {
