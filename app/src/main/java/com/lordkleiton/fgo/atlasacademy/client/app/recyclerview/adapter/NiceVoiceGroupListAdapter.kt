@@ -21,6 +21,9 @@ class NiceVoiceGroupListAdapter(
 ) :
     ListAdapter<NiceVoiceGroup, NiceVoiceGroupListAdapter.NiceVoiceGroupViewAdapter>(
         NiceVoiceGroupViewAdapter) {
+    private val views = mutableListOf<NiceVoiceGroupViewAdapter>()
+
+    fun getViews() = views.toList()
 
     override fun onBindViewHolder(holder: NiceVoiceGroupViewAdapter, position: Int) {
         val item = currentList[position]
@@ -34,8 +37,11 @@ class NiceVoiceGroupListAdapter(
     ): NiceVoiceGroupViewAdapter {
         val view =
             LayoutInflater.from(context).inflate(R.layout.list_item_audio_player, parent, false)
+        val result = NiceVoiceGroupViewAdapter(view, listener)
 
-        return NiceVoiceGroupViewAdapter(view, listener)
+        if (!views.contains(result)) views.add(result)
+
+        return result
     }
 
     class NiceVoiceGroupViewAdapter(
@@ -73,6 +79,12 @@ class NiceVoiceGroupListAdapter(
 
         fun updateProgress(progress: Int) {
             this.progress.progress = progress
+        }
+
+        fun toPlay() {
+            btn.setImageDrawable(dPlay)
+
+            playing = true
         }
 
         fun toggleButton() {

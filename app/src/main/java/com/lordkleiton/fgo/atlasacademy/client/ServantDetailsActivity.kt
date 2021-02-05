@@ -31,7 +31,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-
 class ServantDetailsActivity : AppCompatActivity() {
     private lateinit var primaryName: TextView
     private lateinit var secondaryName: TextView
@@ -101,6 +100,8 @@ class ServantDetailsActivity : AppCompatActivity() {
                     view: NiceVoiceGroupListAdapter.NiceVoiceGroupViewAdapter,
                     pos: Int,
                 ) {
+                    voicesListAdapter.getViews().forEach { it.toPlay() }
+
                     val voice = voicesListAdapter.currentList[pos]
 
                     view.toggleButton()
@@ -110,7 +111,6 @@ class ServantDetailsActivity : AppCompatActivity() {
                     AppMediaPlayer.play(url)
                 }
             })
-
 
         voicesRV.adapter = voicesListAdapter
     }
