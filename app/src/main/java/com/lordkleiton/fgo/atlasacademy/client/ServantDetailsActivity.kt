@@ -4,10 +4,13 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.basic.BasicServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.nice.NiceServant
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.util.findEnumByName
@@ -15,6 +18,7 @@ import com.lordkleiton.fgo.atlasacademy.client.api.lib.request.enum.EnumRegion
 import com.lordkleiton.fgo.atlasacademy.client.app.dao.BasicServantDAO
 import com.lordkleiton.fgo.atlasacademy.client.app.dao.NiceServantDAO
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.ImageListAdapter
+import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.NiceVoiceGroupListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.SkillListAdapter
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_ID
 import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.DEFAULT_REGION
@@ -27,7 +31,6 @@ import com.lordkleiton.fgo.atlasacademy.client.app.utils.AppEnums.RATIO_SERVANT_
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlin.math.round
 
 
 class ServantDetailsActivity : AppCompatActivity() {
@@ -37,6 +40,10 @@ class ServantDetailsActivity : AppCompatActivity() {
     private lateinit var skillListAdapter: SkillListAdapter
     private lateinit var portraitsRV: RecyclerView
     private lateinit var portraitListAdapter: ImageListAdapter
+    private lateinit var progress: LinearProgressIndicator
+    private lateinit var playbtn: ImageButton
+    private lateinit var voicesRV: RecyclerView
+    private lateinit var voicesListAdapter: NiceVoiceGroupListAdapter
 
     private lateinit var nice: NiceServant
     private var basic: BasicServant? = null
@@ -73,11 +80,17 @@ class ServantDetailsActivity : AppCompatActivity() {
 
         secondaryName = findViewById(R.id.servant_details_secondary_name)
 
-        skillsRV = findViewById(R.id.servant_details_rv)
+        skillsRV = findViewById(R.id.servant_details_rv_skills)
 
         portraitsRV = findViewById(R.id.servant_details_rv_img)
 
         mediaPlayer = MediaPlayer()
+
+        progress = findViewById(R.id.list_item_audio_player_progress)
+
+        playbtn = findViewById(R.id.list_item_audio_player_button)
+
+        voicesRV = findViewById(R.id.servant_details_rv_voices)
     }
 
     private fun setupAdapters() {
@@ -86,6 +99,9 @@ class ServantDetailsActivity : AppCompatActivity() {
 
         portraitListAdapter = ImageListAdapter(baseContext, width, height)
         portraitsRV.adapter = portraitListAdapter
+
+        voicesListAdapter = NiceVoiceGroupListAdapter(baseContext)
+        voicesRV.adapter = voicesListAdapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -128,7 +144,15 @@ class ServantDetailsActivity : AppCompatActivity() {
 
         setupImages()
 
-        playAudio()
+        setupVoices()
+
+        //playAudio()
+    }
+
+    private fun setupVoices() {
+        if (nice.profile.voices.isNotEmpty()) {
+            voicesListAdapter.submitList(nice.profile.voices)
+        }
     }
 
     private fun playAudio() {
@@ -149,7 +173,7 @@ class ServantDetailsActivity : AppCompatActivity() {
                 setOnPreparedListener { mp ->
                     mp.start()
 
-                    secondaryName.post(mUpdateTime)
+                    progress.post(mUpdateTime)
                 }
             }
 
@@ -160,22 +184,30 @@ class ServantDetailsActivity : AppCompatActivity() {
     private val mUpdateTime: Runnable = object : Runnable {
         override fun run() {
             if (mediaPlayer.isPlaying) {
+                playbtn.setImageDrawable(AppCompatResources.getDrawable(baseContext,
+                    R.drawable.ic_baseline_pause_24))
+
                 val currentDuration =
                     (mediaPlayer.currentPosition * 100) / mediaPlayer.duration + 1
 
-                secondaryName.text = currentDuration.toString()
+                progress.progress = currentDuration
 
-                secondaryName.postDelayed(this, 1)
+                progress.postDelayed(this, 1)
+            } else {
+                playbtn.setImageDrawable(AppCompatResources.getDrawable(baseContext,
+                    R.drawable.ic_baseline_play_arrow_24))
             }
-
         }
     }
 
-    override fun onDestroy() {
+    override fun onPause() {
+        progress.removeCallbacks(mUpdateTime)
+
         mediaPlayer.release()
 
-        super.onDestroy()
+        super.onPause()
     }
+
 
     private fun setupImages() {
         val list = mutableListOf<String>()

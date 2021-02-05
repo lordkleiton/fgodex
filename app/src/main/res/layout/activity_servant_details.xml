@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".ServantDetailsActivity">
 
+    <include
+        android:id="@+id/blablabla"
+        layout="@layout/list_item_audio_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/servant_details_primary_name"
         android:layout_width="0dp"
@@ -56,14 +64,21 @@
                 tools:listitem="@layout/list_item_image_holder" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/servant_details_rv"
+                android:id="@+id/servant_details_rv_skills"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/servant_details_rv_img"
                 tools:itemCount="3"
                 tools:listitem="@layout/list_item_skill" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/servant_details_rv_voices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/servant_details_rv_skills"
+                tools:listitem="@layout/list_item_audio_player" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
