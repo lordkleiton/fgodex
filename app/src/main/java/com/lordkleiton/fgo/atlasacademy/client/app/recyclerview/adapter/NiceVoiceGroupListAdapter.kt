@@ -13,8 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.lordkleiton.fgo.atlasacademy.client.R
 import com.lordkleiton.fgo.atlasacademy.client.api.lib.model.nice.NiceVoiceGroup
+import com.lordkleiton.fgo.atlasacademy.client.app.recyclerview.adapter.listener.OnVoicePlayButtonClickListener
 
-class NiceVoiceGroupListAdapter(private val context: Context) :
+class NiceVoiceGroupListAdapter(
+    private val context: Context,
+    private val listener: OnVoicePlayButtonClickListener,
+) :
     ListAdapter<NiceVoiceGroup, NiceVoiceGroupListAdapter.NiceVoiceGroupViewAdapter>(
         NiceVoiceGroupViewAdapter) {
 
@@ -31,10 +35,13 @@ class NiceVoiceGroupListAdapter(private val context: Context) :
         val view =
             LayoutInflater.from(context).inflate(R.layout.list_item_audio_player, parent, false)
 
-        return NiceVoiceGroupViewAdapter(view)
+        return NiceVoiceGroupViewAdapter(view, listener)
     }
 
-    class NiceVoiceGroupViewAdapter(private val view: View) : RecyclerView.ViewHolder(view) {
+    class NiceVoiceGroupViewAdapter(
+        view: View,
+        listener: OnVoicePlayButtonClickListener,
+    ) : RecyclerView.ViewHolder(view) {
         private lateinit var group: NiceVoiceGroup
         private var playing = false
 
@@ -51,6 +58,12 @@ class NiceVoiceGroupListAdapter(private val context: Context) :
                 dPlay =
                     AppCompatResources.getDrawable(context, R.drawable.ic_baseline_play_arrow_24)
                 dPause = AppCompatResources.getDrawable(context, R.drawable.ic_baseline_pause_24)
+
+                btn.setOnClickListener {
+                    listener.onItemClick(this@NiceVoiceGroupViewAdapter, adapterPosition)
+                }
+
+                toggleButton()
             }
         }
 
