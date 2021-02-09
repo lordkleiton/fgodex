@@ -54,7 +54,7 @@ class NiceVoiceGroupListAdapter(
         private val btn: ImageButton
         private val progress: LinearProgressIndicator
         private val dPlay: Drawable?
-        private val dPause: Drawable?
+        private val dReplay: Drawable?
 
         init {
             view.apply {
@@ -63,7 +63,7 @@ class NiceVoiceGroupListAdapter(
 
                 dPlay =
                     AppCompatResources.getDrawable(context, R.drawable.ic_baseline_play_arrow_24)
-                dPause = AppCompatResources.getDrawable(context, R.drawable.ic_baseline_pause_24)
+                dReplay = AppCompatResources.getDrawable(context, R.drawable.ic_baseline_replay_24)
 
                 btn.setOnClickListener {
                     listener.onItemClick(this@NiceVoiceGroupViewAdapter, adapterPosition)
@@ -89,7 +89,7 @@ class NiceVoiceGroupListAdapter(
 
         fun toggleButton() {
             when (playing) {
-                true -> btn.setImageDrawable(dPause)
+                true -> btn.setImageDrawable(dReplay)
                 else -> btn.setImageDrawable(dPlay)
             }
 

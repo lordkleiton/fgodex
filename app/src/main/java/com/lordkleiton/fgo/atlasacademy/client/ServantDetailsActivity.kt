@@ -123,8 +123,6 @@ class ServantDetailsActivity : AppCompatActivity() {
 
                                     view.view.postDelayed(this, delay)
                                 } else {
-                                    view.toggleButton()
-
                                     view.updateProgress(0)
                                 }
                             }
