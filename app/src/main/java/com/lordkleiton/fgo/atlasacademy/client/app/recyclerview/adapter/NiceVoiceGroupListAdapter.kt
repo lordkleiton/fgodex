@@ -45,7 +45,7 @@ class NiceVoiceGroupListAdapter(
     }
 
     class NiceVoiceGroupViewAdapter(
-        view: View,
+        val view: View,
         listener: OnVoicePlayButtonClickListener,
     ) : RecyclerView.ViewHolder(view) {
         private lateinit var group: NiceVoiceGroup

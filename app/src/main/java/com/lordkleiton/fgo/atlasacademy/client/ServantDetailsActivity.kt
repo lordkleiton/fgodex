@@ -94,6 +94,10 @@ class ServantDetailsActivity : AppCompatActivity() {
         portraitListAdapter = ImageListAdapter(baseContext, width, height)
         portraitsRV.adapter = portraitListAdapter
 
+        setupVoicesAdapter()
+    }
+
+    private fun setupVoicesAdapter() {
         voicesListAdapter =
             NiceVoiceGroupListAdapter(baseContext, object : OnVoicePlayButtonClickListener {
                 override fun onItemClick(
@@ -108,7 +112,25 @@ class ServantDetailsActivity : AppCompatActivity() {
 
                     val url = voice.voiceLines.first().audioAssets.first()
 
-                    AppMediaPlayer.play(url)
+                    AppMediaPlayer.play(url) {
+                        val delay = 1L
+
+                        view.view.postDelayed(object : Runnable {
+
+                            override fun run() {
+                                if (AppMediaPlayer.isPlaying()) {
+                                    view.updateProgress(AppMediaPlayer.getProgress())
+
+                                    view.view.postDelayed(this, delay)
+                                } else {
+                                    view.toggleButton()
+
+                                    view.updateProgress(0)
+                                }
+                            }
+
+                        }, delay)
+                    }
                 }
             })
 

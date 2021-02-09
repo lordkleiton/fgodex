@@ -6,7 +6,6 @@ import android.util.Log
 
 object AppMediaPlayer {
     private var mediaPlayer: MediaPlayer? = null
-    private var currentUrl: String? = null
 
     fun stopPlayer() {
         mediaPlayer?.apply {
@@ -33,9 +32,13 @@ object AppMediaPlayer {
         }
     }
 
-    fun getProgress() = mediaPlayer?.currentPosition
+    fun getProgress() = mediaPlayer?.run {
+        (currentPosition * 100) / duration
+    } ?: 0
 
-    private fun playAudio(url: String) {
+    fun isPlaying() = mediaPlayer?.isPlaying ?: false
+
+    private fun playAudio(url: String, onPlay: () -> Unit) {
         mediaPlayer?.apply {
             setDataSource(url)
 
@@ -43,15 +46,17 @@ object AppMediaPlayer {
 
             setOnPreparedListener {
                 start()
+
+                onPlay()
             }
 
             setOnCompletionListener { Log.i("hmm", "cabou") }
         }
     }
 
-    fun play(url: String) {
+    fun play(url: String, onPlay: () -> Unit) {
         setupPlayer()
 
-        playAudio(url)
+        playAudio(url, onPlay)
     }
 }
